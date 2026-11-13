@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+:root {
+  --canvas: #fffdfb;
+  --sidebar: #f8f1eb;
+  --sidebar-active: #eee2d8;
+  --model-active: #fbefe7;
+  --user-bubble: #f2e9e3;
+  --composer: #fffdfa;
+  --composer-line: #e4d7ce;
+  --line: #eadfd7;
+  --ink: #241b18;
+  --ink-muted: #5d514c;
+  --ink-faint: #8f817a;
+  --accent: #c84a18;
+  --accent-strong: #aa3710;
+  --background: var(--canvas);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.chat-scroll {
+  scrollbar-color: #d8c9bf transparent;
+  scrollbar-width: thin;
+}
+
+.composer-fade {
+  background: linear-gradient(
+    to top,
+    var(--canvas) 0%,
+    var(--canvas) 72%,
+    color-mix(in srgb, var(--canvas) 78%, transparent) 86%,
+    transparent 100%
+  );
+}
+
+/* Response-generation motion */
+@keyframes aurion-signal-wave {
+  0%,
+  100% {
+    opacity: 0.38;
+    transform: translateY(1px) scaleY(0.32);
+  }
+  48% {
+    opacity: 1;
+    transform: translateY(-1px) scaleY(1.18);
+  }
+}
+
+@keyframes aurion-signal-trail {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scaleX(0.3);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scaleX(1);
+  }
+}
+
+.thinking-signal {
+  animation-name: aurion-signal-wave;
+  animation-duration: 900ms;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  animation-iteration-count: infinite;
+  transform-box: fill-box;
+}
+
+.thinking-trail {
+  animation-name: aurion-signal-trail;
+  animation-duration: 900ms;
+  animation-delay: 90ms;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  animation-iteration-count: infinite;
+  transform-origin: left center;
+  transform-box: fill-box;
+}
+
+::selection {
+  background: #f2c6b4;
+  color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .composer-fade {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
